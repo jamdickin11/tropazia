@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tropasia · Riviera noir</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #030303;
+            color: #eaeaea;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* animated background orbs */
+        .bg-orb {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        .orb {
+            position: absolute;
+            width: 40vmax;
+            height: 40vmax;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(181, 157, 122, 0.15) 0%, rgba(10, 10, 10, 1) 70%);
+            filter: blur(80px);
+            animation: floatOrb 20s infinite alternate ease-in-out;
+        }
+        .orb1 { top: -10vh; left: -10vw; animation-duration: 25s; }
+        .orb2 { bottom: -10vh; right: -5vw; width: 50vmax; height: 50vmax; background: radial-gradient(circle, rgba(140, 120, 90, 0.12) 0%, #030303 80%); animation-duration: 30s; }
+        .orb3 { top: 40vh; left: 30vw; width: 30vmax; height: 30vmax; background: radial-gradient(circle, rgba(200, 180, 150, 0.1) 0%, #030303 80%); animation-duration: 22s; }
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5%, 5%) scale(1.1); }
+        }
+
+        /* overlay to ensure readability */
+        .overlay {
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(0px); /* no blur, keep sharpness */
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 3rem;
+        }
+
+        /* navbar glass */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 3rem;
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(181, 157, 122, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background 0.3s;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.3rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: #f0e6d8;
+        }
+        .logo span {
+            font-weight: 300;
+            color: #b59d7a;
+            font-size: 1.8rem;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        .lang-switch a {
+            text-decoration: none;
+            color: #eaeaea;
+            opacity: 0.5;
+            transition: 0.2s;
+            letter-spacing: 0.1em;
+        }
+        .lang-switch a.active, .lang-switch a:hover {
+            opacity: 1;
+            color: #b59d7a;
+        }
+
+        /* hero with free-use video background (coverr / pexels direct link - free to use) */
+        .hero {
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
+            filter: grayscale(0.5) contrast(1.2);
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 30%, #030303 90%);
+            z-index: -1;
+        }
+        .hero-content {
+            max-width: 1000px;
+            padding: 2rem;
+            animation: fadeUp 1.4s ease-out;
+        }
+        .hero h1 {
+            font-size: 6rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .hero p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.07em;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            color: #ddd;
+        }
+        .btn {
+            border: 1px solid #b59d7a;
+            background: transparent;
+            padding: 1rem 3rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #b59d7a;
+            text-decoration: none;
+            transition: 0.4s;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:hover {
+            background: #b59d7a;
+            color: #030303;
+            border-color: #b59d7a;
+            box-shadow: 0 0 25px rgba(181, 157, 122, 0.5);
+        }
+
+        /* identity block glass */
+        .identity-section {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(181, 157, 122, 0.1);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            border-radius: 2px;
+            transition: transform 0.3s;
+        }
+        .identity-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .identity-en, .identity-fr, .identity-zh {
+            display: none;
+            font-size: 1.3rem;
+            font-weight: 300;
+            line-height: 1.9;
+        }
+        .identity-en.active, .identity-fr.active, .identity-zh.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        .identity-container p {
+            margin-bottom: 0.6rem;
+        }
+        .identity-container p:last-child {
+            margin-bottom: 0;
+            color: #b59d7a;
+        }
+        .identity-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: #b59d7a;
+            letter-spacing: 0.15em;
+        }
+
+        /* section titles */
+        .section-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin: 5rem 0 3rem;
+            font-weight: 500;
+            color: #f0e6d8;
+            position: relative;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 1px;
+            background: #b59d7a;
+            margin: 1.5rem auto 0;
+        }
+
+        /* service cards glass */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+        .service-card {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(181, 157, 122, 0.15);
+            padding: 2.5rem 1.8rem;
+            transition: all 0.4s cubic-bezier(0.2,0.9,0.3,1);
+            border-radius: 0;
+            box-shadow: 0 15px 30px -15px black;
+        }
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(181, 157, 122, 0.5);
+            box-shadow: 0 20px 35px -10px #000, 0 0 0 1px rgba(181,157,122,0.2);
+            background: rgba(30, 30, 30, 0.8);
+        }
+        .service-icon {
+            font-size: 2.8rem;
+            color: #b59d7a;
+            margin-bottom: 1.5rem;
+        }
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .service-card p {
+            font-size: 0.95rem;
+            color: #bbb;
+        }
+
+        /* app showcase dark glass */
+        .app-showcase {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(181,157,122,0.2);
+            border-bottom: 1px solid rgba(181,157,122,0.2);
+            padding: 5rem 3rem;
+            margin: 5rem 0;
+        }
+        .app-flex {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4rem;
+        }
+        .app-mockup {
+            flex: 1 1 250px;
+            text-align: center;
+            font-size: 9rem;
+            color: #b59d7a;
+            line-height: 1;
+            filter: drop-shadow(0 0 15px #b59d7a44);
+            animation: pulseGlow 4s infinite alternate;
+        }
+        @keyframes pulseGlow {
+            0% { filter: drop-shadow(0 0 5px #b59d7a33); }
+            100% { filter: drop-shadow(0 0 25px #b59d7a); }
+        }
+        .app-desc {
+            flex: 2 1 500px;
+        }
+        .app-desc h2 {
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .app-desc h2 span {
+            color: #b59d7a;
+            font-weight: 300;
+        }
+        .app-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+        .feature-item {
+            transition: 0.2s;
+        }
+        .feature-item i {
+            color: #b59d7a;
+            width: 2rem;
+            font-size: 1.4rem;
+            margin-right: 0.6rem;
+        }
+        .feature-item strong {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #f0e6d8;
+        }
+        .feature-item p {
+            margin-top: 0.3rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* language narratives */
+        .lang-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .lang-tab {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            color: #f0e6d8;
+            opacity: 0.3;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+        }
+        .lang-tab.active {
+            opacity: 1;
+            border-bottom: 2px solid #b59d7a;
+        }
+        .narrative-card {
+            display: none;
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 3.5rem;
+            border: 1px solid rgba(181,157,122,0.1);
+            border-radius: 2px;
+            box-shadow: 0 25px 40px -20px black;
+            animation: fadeIn 0.6s;
+        }
+        .narrative-card.active {
+            display: block;
+        }
+        .narrative-card h3 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: #b59d7a;
+        }
+        .narrative-card h4 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #b59d7a;
+        }
+        .narrative-card p {
+            margin-bottom: 1.2rem;
+            color: #ccc;
+        }
+
+        /* footer */
+        .footer-identity {
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(181,157,122,0.2);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 5rem;
+        }
+        .id-short {
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.1rem;
+            line-height: 2;
+        }
+        .id-short div {
+            display: none;
+        }
+        .id-short div.active {
+            display: block;
+        }
+        .btn-footer {
+            border: 1px solid #b59d7a;
+            background: transparent;
+            padding: 0.9rem 2.8rem;
+            text-decoration: none;
+            letter-spacing: 0.2em;
+            font-size: 0.8rem;
+            color: #b59d7a;
+            transition: 0.3s;
+        }
+        .btn-footer:hover {
+            background: #b59d7a;
+            color: #030303;
+            box-shadow: 0 0 30px #b59d7a;
+        }
+
+        /* animations */
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* free media: unsplash image gallery? we use a video background (coverr) */
+        /* video link from Coverr (free to use, no attribution needed) */
+        .hero-video {
+            pointer-events: none;
+        }
+
+        @media (max-width: 800px) {
+            .navbar { padding: 1rem 1.5rem; }
+            .hero h1 { font-size: 3.5rem; }
+            .app-features { grid-template-columns: 1fr; }
+            .container { padding: 1rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background orbs (non-static) -->
+    <div class="bg-orb">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+    </div>
+
+    <div class="overlay">
+        <nav class="navbar">
+            <div class="logo">TROPASIA<span> ✦</span></div>
+            <div class="lang-switch" id="langSwitcher">
+                <a href="#" data-lang="en" class="active">EN</a>
+                <a href="#" data-lang="fr">FR</a>
+                <a href="#" data-lang="zh">中</a>
+            </div>
+        </nav>
+
+        <!-- Hero with free video background (Coverr – French Riviera style) -->
+        <section class="hero">
+            <video class="hero-video" autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23030303%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-size%3D%2230%22%20fill%3D%22%23b59d7a%22%20font-family%3D%22Cormorant%22%20text-anchor%3D%22middle%22%3ERiviera%20Dream%3C%2Ftext%3E%3C%2Fsvg%3E">
+                <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-a-boat-on-the-sea-3979/1080p.mp4" type="video/mp4">
+                <!-- fallback: if video fails, background stays dark -->
+            </video>
+            <div class="hero-content">
+                <h1>TROPASIA</h1>
+                <p>Your Riviera story begins here. Architect of unforgettable summers.</p>
+                <a href="#" class="btn">discover the art de vivre</a>
+            </div>
+        </section>
+
+        <!-- Identity speech (5 lines) dynamic -->
+        <div class="identity-section container">
+            <div class="identity-container">
+                <div class="identity-label">— essence —</div>
+                <div class="identity-en active">
+                    <p>Tropasia is the architect of unforgettable summers on the French Riviera, curating exclusive experiences for a discerning Asian clientele.</p>
+                    <p>From Saint-Tropez to Monaco, we offer bespoke access to villas, yachts, nightlife, and cultural gems.</p>
+                    <p>Our Tropasia One App, featuring a customizable AI companion, provides real-time translation, high-quality content creation, and instant solutions.</p>
+                    <p>Whether for families, couples, or groups of friends, we blend human touch with digital intelligence.</p>
+                    <p>Join us to make your summer iconic, fabulously enjoyable, and perfectly personalized.</p>
+                </div>
+                <div class="identity-fr">
+                    <p>Tropasia est l'architecte de séjours inoubliables sur la Côte d'Azur, curant des expériences exclusives pour une clientèle asiatique raffinée.</p>
+                    <p>De Saint-Tropez à Monaco, nous offrons un accès sur mesure à des villas, des yachts, des nightclubs et des trésors culturels.</p>
+                    <p>Notre Application Tropasia One, dotée d'un compagnon IA personnalisable, propose traduction en temps réel, contenus haute qualité et solutions instantanées.</p>
+                    <p>Pour les familles, les couples ou les groupes d'amis, nous allions la touche humaine à l'intelligence numérique.</p>
+                    <p>Rejoignez-nous pour faire de votre été un moment iconique, fabuleux et parfaitement sur mesure.</p>
+                </div>
+                <div class="identity-zh">
+                    <p>Tropasia 是您在法国里维埃拉打造难忘夏日的建筑师，专为品味卓越的亚洲宾客策划专属体验。</p>
+                    <p>从圣特罗佩到摩纳哥，我们为您提供别墅、游艇、夜生活及文化瑰宝的定制化入口。</p>
+                    <p>我们的Tropasia One应用程序，配备可定制的AI智能伴侣，提供实时翻译、高品质影像创作，并能在几分钟内响应任何请求。</p>
+                    <p>无论是家庭、情侣还是好友团体，我们融合人性化的关怀与数字化的智能。</p>
+                    <p>加入我们，让您的夏天成为传奇，妙趣横生，且完全属于您。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services grid -->
+        <div class="container">
+            <h2 class="section-title">Bespoke experiences</h2>
+            <div class="services-grid">
+                <div class="service-card"><div class="service-icon"><i class="fas fa-home"></i></div><h3>Villas & maisons</h3><p>Masterpieces from St-Tropez to Cap Ferrat, each with soul.</p></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-ship"></i></div><h3>Yachts & maritime</h3><p>Day cruises, superyachts, hidden coves — your private sea.</p></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-user-tie"></i></div><h3>Drivers & chefs</h3><p>Discreet professionals, world-class cooks, wellness coaches.</p></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-shield-alt"></i></div><h3>Security & privacy</h3><p>High-end protection for absolute peace of mind.</p></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-wine-glass-alt"></i></div><h3>Nightlife & beaches</h3><p>VIP access to Nikki Beach, clubs where superstars become scenery.</p></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-gem"></i></div><h3>Cultural shopping</h3><p>Private viewings, artisans, castles, vineyards — culture meets luxe.</p></div>
+            </div>
+        </div>
+
+        <!-- Tropasia One app -->
+        <div class="app-showcase">
+            <div class="app-flex container">
+                <div class="app-mockup">
+                    <i class="fas fa-robot"></i>
+                    <div style="font-size: 1.4rem; margin-top: 1rem; font-family: 'Cormorant Garamond';">TROPASIA ONE</div>
+                </div>
+                <div class="app-desc">
+                    <h2>Your AI companion <span>· always with you</span></h2>
+                    <p>Beyond an app: a customizable avatar that speaks every language, captures every moment in high quality, and fulfills any request within minutes. The invisible hand that makes the impossible possible.</p>
+                    <div class="app-features">
+                        <div class="feature-item"><i class="fas fa-language"></i> <strong>Real‑time translation</strong><p>Mandarin, English, French — seamless conversation.</p></div>
+                        <div class="feature-item"><i class="fas fa-camera-retro"></i> <strong>Personal creator</strong><p>AI‑guided high‑res photos & videos, automatic highlight reels.</p></div>
+                        <div class="feature-item"><i class="fas fa-concierge-bell"></i> <strong>Any request, any time</strong><p>Speak or type: solutions appear in minutes.</p></div>
+                        <div class="feature-item"><i class="fas fa-credit-card"></i> <strong>Unified payments</strong><p>One tap for villas, tips, beach clubs — itemised, secure.</p></div>
+                        <div class="feature-item"><i class="fas fa-map-marked-alt"></i> <strong>AR explorer</strong><p>Point at villages, yachts, ateliers — stories appear.</p></div>
+                        <div class="feature-item"><i class="fas fa-sliders-h"></i> <strong>Hyper‑personalized</strong><p>Learns your taste: from rosé to Bulgari, from vineyards to nightlife.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multilingual narratives -->
+        <div class="container language-narratives">
+            <div class="lang-tabs">
+                <span class="lang-tab active" data-lang="en">English</span>
+                <span class="lang-tab" data-lang="fr">Français</span>
+                <span class="lang-tab" data-lang="zh">中文</span>
+            </div>
+
+            <div class="narrative-card active" id="narr-en">
+                <h3>Tropasia: Your Riviera Story Begins Here.</h3>
+                <p>Welcome to the French Riviera, a sun-drenched tapestry of azure waters, glamorous ports, and medieval villages. Tropasia is your personal curator of this legendary coastline, crafting bespoke summer experiences for a distinguished Asian clientele. Whether you are a family seeking a secure and stylish retreat, a group of Gen Z friends ready to conquer the scene, or a couple in search of romance, we are your gateway to the ultimate Mediterranean escape.</p>
+                <p>We design journeys that captivate every passion. Indulge in a cultural shopping spree along the Croisette in Cannes, where luxury brands become an art form. Feel the thrill as you step onto your private yacht in Monaco, ready to explore secluded coves. Savor a gourmet dinner prepared by a private chef in your Saint-Tropez villa, followed by VIP access to the world's most famous nightspots, where superstars are simply part of the décor.</p>
+                <p>From the breathtaking panoramas of Ramatuelle to the electric energy of Nikki Beach, Tropasia weaves the magic of the South of France into a flawless, unforgettable narrative. Join us, and make this summer iconic.</p>
+                <h4>Tropasia One App – your AI companion</h4>
+                <p>With the Tropasia One App, the magic of the Riviera is at your command. Your customizable AI companion provides real-time translation in any language, captures every moment in high quality, and responds to any request—any time—delivering solutions in minutes. It's the ultimate fusion of human touch and digital intelligence, ensuring your summer is perfectly, personally yours.</p>
+            </div>
+            <div class="narrative-card" id="narr-fr">
+                <h3>Tropasia : Votre Histoire sur la Riviera Commence Ici.</h3>
+                <p>Bienvenue sur la Côte d'Azur, une toile de fond ensoleillée d'eaux azurées, de ports glamour et de villages médiévaux. Tropasia est votre architecte d'expériences exclusives sur cette côte légendaire, créant des séjours estivaux sur mesure pour une clientèle asiatique distinguée. Que vous soyez une famille en quête d'un refuge stylé et sécurisé, un groupe d'amis Gen Z prêt à conquérir la scène, ou un couple en quête de romantisme, nous sommes votre passerelle vers l'ultime évasion méditerranéenne.</p>
+                <p>Nous concevons des voyages qui captivent toutes les passions. Offrez-vous une virée shopping culturelle sur la Croisette à Cannes, où les marques de luxe deviennent un art. Vivez le frisson en montant à bord de votre yacht privé à Monaco, prêt à explorer des criques secrètes. Savourez un dîner gastronomique préparé par un chef privé dans votre villa de Saint-Tropez, suivi d'un accès VIP aux nightclubs les plus célèbres du monde, où les superstars font naturellement partie du décor.</p>
+                <p>Des panoramas à couper le souffle de Ramatuelle à l'énergie électrisante du Nikki Beach, Tropasia tisse la magie du Sud de la France en un récit impeccable et inoubliable. Rejoignez-nous pour faire de cet été un moment iconique.</p>
+                <h4>Application Tropasia One – compagnon IA</h4>
+                <p>Avec l'application Tropasia One, la magie de la Riviera est à votre portée. Votre compagnon IA personnalisable offre une traduction en temps réel dans toutes les langues, capture chaque instant en haute qualité et répond à toutes vos demandes à tout moment, en apportant des solutions en quelques minutes. C'est l'alliance ultime de la touche humaine et de l'intelligence numérique, pour un été parfaitement, personnellement vôtre.</p>
+            </div>
+            <div class="narrative-card" id="narr-zh">
+                <h3>Tropasia：您在里维埃拉的故事，由此开启。</h3>
+                <p>欢迎来到法国里维埃拉，这片阳光普照的土地拥有湛蓝的海水、迷人的港湾和中世纪的村庄。Tropasia 是您在这条传奇海岸线的私人体验官，专为眼光独到的亚洲宾客量身打造奢华的夏日假期。无论是寻求私密时尚度假的家庭、准备引领风潮的Z世代好友团体，还是渴望浪漫时光的伴侣，我们都是您体验终极地中海风情的不二之选。</p>
+                <p>我们精心设计能点燃每个人热情的旅程。在戛纳的十字大道上，来一场时尚文化之旅，感受奢侈品牌的艺术魅力。在摩纳哥登上您的私人游艇，体验探索隐秘峡湾的无限激情。在圣特罗佩的别墅里，享用私人厨师精心准备的晚宴，随后通过VIP通道，进入全球最负盛名的夜店，与国际巨星擦肩而过。</p>
+                <p>从拉马蒂埃勒令人屏息的美景，到尼基海滩的动感活力，Tropasia 将法国南部的迷人魅力，编织成您完美无瑕、永生难忘的夏日记忆。加入我们，让您的夏天成为传奇。</p>
+                <h4>Tropasia One 应用程序 – 您的智能伴侣</h4>
+                <p>有了 Tropasia One 应用程序，里维埃拉的魔力尽在您的掌控之中。您可定制的AI伴侣能提供任何语言的实时翻译，以高品质捕捉每一个瞬间，并随时响应任何请求，在几分钟内为您提供解决方案。这是人性化服务与数字智能的终极融合，确保您的夏天成为完美、私属的传奇。</p>
+            </div>
+        </div>
+
+        <!-- footer identity speech -->
+        <footer class="footer-identity">
+            <div class="id-short">
+                <div class="identity-en active">
+                    <p>Tropasia — architect of unforgettable summers, curating exclusive experiences for Asian clientele.</p>
+                    <p>Saint-Tropez → Monaco: villas, yachts, nightlife, cultural gems.</p>
+                    <p>Tropasia One App: customizable AI for translation, content, instant solutions.</p>
+                    <p>For families, couples, friends — human touch & digital intelligence.</p>
+                    <p>Your iconic, fabulously enjoyable, perfectly personalized summer.</p>
+                </div>
+                <div class="identity-fr">
+                    <p>Tropasia — architecte de séjours inoubliables, expériences exclusives pour clientèle asiatique.</p>
+                    <p>Saint-Tropez → Monaco : villas, yachts, nightclubs, trésors culturels.</p>
+                    <p>App Tropasia One : IA sur mesure, traduction, contenus, solutions instantanées.</p>
+                    <p>Familles, couples, amis — touche humaine & intelligence numérique.</p>
+                    <p>Votre été iconique, fabuleux, parfaitement sur mesure.</p>
+                </div>
+                <div class="identity-zh">
+                    <p>Tropasia — 难忘夏日建筑师，专为亚洲宾客策划专属体验。</p>
+                    <p>圣特罗佩→摩纳哥：别墅、游艇、夜生活、文化瑰宝。</p>
+                    <p>Tropasia One 应用：可定制AI，翻译、内容、即时解决方案。</p>
+                    <p>家庭、情侣、朋友 — 人性与智能的融合。</p>
+                    <p>您的传奇之夏，妙趣横生，完全属于您。</p>
+                </div>
+            </div>
+            <a href="#" class="btn-footer">join the iconic summer</a>
+            <p style="margin-top: 2.5rem; font-size: 0.8rem; opacity: 0.4;">© Tropasia — French Riviera · MMXXV</p>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            const langLinks = document.querySelectorAll('.lang-switch a');
+            const langTabs = document.querySelectorAll('.lang-tab');
+            const identityEn = document.querySelectorAll('.identity-en');
+            const identityFr = document.querySelectorAll('.identity-fr');
+            const identityZh = document.querySelectorAll('.identity-zh');
+            const narrEn = document.getElementById('narr-en');
+            const narrFr = document.getElementById('narr-fr');
+            const narrZh = document.getElementById('narr-zh');
+
+            function setLanguage(lang) {
+                // update all identity blocks
+                document.querySelectorAll('.identity-en, .identity-fr, .identity-zh').forEach(el => {
+                    el.classList.remove('active');
+                });
+                document.querySelectorAll('.identity-'+lang).forEach(el => {
+                    el.classList.add('active');
+                });
+
+                // narratives
+                document.querySelectorAll('.narrative-card').forEach(c => c.classList.remove('active'));
+                if (lang === 'en') narrEn.classList.add('active');
+                if (lang === 'fr') narrFr.classList.add('active');
+                if (lang === 'zh') narrZh.classList.add('active');
+
+                // tabs & switcher
+                langLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.lang === lang) link.classList.add('active');
+                });
+                langTabs.forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.dataset.lang === lang) tab.classList.add('active');
+                });
+            }
+
+            langLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setLanguage(link.dataset.lang);
+                });
+            });
+            langTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    setLanguage(tab.dataset.lang);
+                });
+            });
+
+            setLanguage('en');
+        })();
+    </script>
+</body>
+</html>
