@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tropasia · Riviera noir</title>
+    <title>Tropasia · Riviera noir · visual archive</title>
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,7 +57,7 @@
         .overlay {
             position: relative;
             z-index: 1;
-            backdrop-filter: blur(0px); /* no blur, keep sharpness */
+            backdrop-filter: blur(0px); 
         }
 
         h1, h2, h3, h4 {
@@ -120,7 +120,7 @@
             color: #b59d7a;
         }
 
-        /* hero with free-use video background (coverr / pexels direct link - free to use) */
+        /* hero with free video background */
         .hero {
             position: relative;
             min-height: 90vh;
@@ -412,7 +412,53 @@
             color: #ccc;
         }
 
-        /* footer */
+        /* ——— NEW GALLERY (added media) ——— */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
+            margin: 3rem 0 5rem;
+        }
+        .gallery-item {
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            background: #111;
+            border: 1px solid rgba(181,157,122,0.2);
+            transition: all 0.5s cubic-bezier(0.2,0.9,0.3,1);
+            opacity: 0;
+            animation: fadeInGallery 0.8s forwards;
+            box-shadow: 0 10px 20px -8px rgba(0,0,0,0.8);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease, filter 0.5s;
+            filter: grayscale(0.7) brightness(0.7);
+        }
+        .gallery-item:hover {
+            border-color: #b59d7a;
+            box-shadow: 0 25px 35px -12px black, 0 0 0 1px rgba(181,157,122,0.4);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.07);
+            filter: grayscale(0) brightness(1);
+        }
+
+        /* staggered animation for gallery items */
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInGallery {
+            0% { opacity: 0; transform: translateY(25px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* footer identity */
         .footer-identity {
             background: rgba(0,0,0,0.8);
             backdrop-filter: blur(10px);
@@ -459,8 +505,6 @@
             100% { opacity: 1; }
         }
 
-        /* free media: unsplash image gallery? we use a video background (coverr) */
-        /* video link from Coverr (free to use, no attribution needed) */
         .hero-video {
             pointer-events: none;
         }
@@ -470,11 +514,16 @@
             .hero h1 { font-size: 3.5rem; }
             .app-features { grid-template-columns: 1fr; }
             .container { padding: 1rem 1.5rem; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 500px) {
+            .gallery-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Animated background orbs (non-static) -->
+    <!-- Animated background orbs -->
     <div class="bg-orb">
         <div class="orb orb1"></div>
         <div class="orb orb2"></div>
@@ -491,11 +540,10 @@
             </div>
         </nav>
 
-        <!-- Hero with free video background (Coverr – French Riviera style) -->
+        <!-- Hero with free video background (Coverr) -->
         <section class="hero">
             <video class="hero-video" autoplay muted loop playsinline poster="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23030303%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-size%3D%2230%22%20fill%3D%22%23b59d7a%22%20font-family%3D%22Cormorant%22%20text-anchor%3D%22middle%22%3ERiviera%20Dream%3C%2Ftext%3E%3C%2Fsvg%3E">
                 <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-a-boat-on-the-sea-3979/1080p.mp4" type="video/mp4">
-                <!-- fallback: if video fails, background stays dark -->
             </video>
             <div class="hero-content">
                 <h1>TROPASIA</h1>
@@ -577,7 +625,7 @@
 
             <div class="narrative-card active" id="narr-en">
                 <h3>Tropasia: Your Riviera Story Begins Here.</h3>
-                <p>Welcome to the French Riviera, a sun-drenched tapestry of azure waters, glamorous ports, and medieval villages. Tropasia is your personal curator of this legendary coastline, crafting bespoke summer experiences for a distinguished Asian clientele. Whether you are a family seeking a secure and stylish retreat, a group of Gen Z friends ready to conquer the scene, or a couple in search of romance, we are your gateway to the ultimate Mediterranean escape.</p>
+                <p>Welcome to the French Riviera, a sun-drenched tapestry of azure waters, glamorous ports, and medieval villages. Tropasia is your personal curator of this legendary coastline, crafting bespoke summer experiences for a distinguished Asian clien­tele. Whether you are a family seeking a secure and stylish retreat, a group of Gen Z friends ready to conquer the scene, or a couple in search of romance, we are your gateway to the ultimate Mediterranean escape.</p>
                 <p>We design journeys that captivate every passion. Indulge in a cultural shopping spree along the Croisette in Cannes, where luxury brands become an art form. Feel the thrill as you step onto your private yacht in Monaco, ready to explore secluded coves. Savor a gourmet dinner prepared by a private chef in your Saint-Tropez villa, followed by VIP access to the world's most famous nightspots, where superstars are simply part of the décor.</p>
                 <p>From the breathtaking panoramas of Ramatuelle to the electric energy of Nikki Beach, Tropasia weaves the magic of the South of France into a flawless, unforgettable narrative. Join us, and make this summer iconic.</p>
                 <h4>Tropasia One App – your AI companion</h4>
@@ -598,6 +646,19 @@
                 <p>从拉马蒂埃勒令人屏息的美景，到尼基海滩的动感活力，Tropasia 将法国南部的迷人魅力，编织成您完美无瑕、永生难忘的夏日记忆。加入我们，让您的夏天成为传奇。</p>
                 <h4>Tropasia One 应用程序 – 您的智能伴侣</h4>
                 <p>有了 Tropasia One 应用程序，里维埃拉的魔力尽在您的掌控之中。您可定制的AI伴侣能提供任何语言的实时翻译，以高品质捕捉每一个瞬间，并随时响应任何请求，在几分钟内为您提供解决方案。这是人性化服务与数字智能的终极融合，确保您的夏天成为完美、私属的传奇。</p>
+            </div>
+        </div>
+
+        <!-- ========== ADDED MEDIA GALLERY (requested images) ========== -->
+        <div class="container">
+            <h2 class="section-title">Riviera moments</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://tropazia.vercel.app/1.png" alt="Tropasia Saint-Tropez coastline" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://tropazia.vercel.app/4.png" alt="Tropasia yacht escape" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://tropazia.vercel.app/5.jpg" alt="Tropasia infinity pool" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://tropazia.vercel.app/10.mp4" alt="Tropasia village view" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://tropazia.vercel.app/11.jpg" alt="Tropasia glamorous night" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://tropazia.vercel.app/13.jpg" alt="Tropasia cultural hideaway" loading="lazy"></div>
             </div>
         </div>
 
